@@ -1,0 +1,43 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>CLICKnBLOG</title>
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+</head>
+<body>
+<header>
+    <div class="nav-left">
+        <h1><a href="{% url 'home' %}">CLICKnBLOG</a></h1>
+    </div>
+    
+    {% if user.is_authenticated %}
+    <div class="">
+        <h2><link href="{% url 'home' %}">{{ user }},  welcome  to  CLICKnBLOG</h2>
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.info %} class="{{ message.login }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    </div>
+    <div class="nav-right">
+        <a href="{% url 'post_new' %}">  +New Blog Post</a>
+    </div>
+    <div class="nav-item">
+        <a href="{% url 'logout' %}">  Logout</a>
+    </div>
+    {% else %}
+    <div class="nav-right">
+        <h2><a href="{% url 'login' %}">Login</a></h2>
+    </div>
+    {% endif %}
+</header>
+<div>
+    {% block content%}
+    {% endblock %}
+</div>
+</body>
+</html>

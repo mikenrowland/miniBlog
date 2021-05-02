@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="post-entry">
+      <h2>{{ post.title }}</h2>
+      <p>{{ post.body }}</p>
+  </div>
+  <div class="card-body">
+    <p class=" text-muted">By {{ post.author }} | {{ post.created_on }}</p>
+    <p class="card-text ">{{ post.content | safe }}</p>
+  </div>
+  <div>
+    {% if user == post.author %}
+    <a href="{% url 'post_edit' post.pk %}">+ Edit Blog Post</a>
+    <a href="{% url 'post_delete' post.pk %}">+ Delete Blog Post</a>
+    {% endif %}
+  </div>
+  {% if user.is_authenticated %}
+  <div>
+    <p><a href="{% url 'post_comment' post.pk %}">+ Add comments</a></p>
+  </div>
+  {% endif %}
+{% endblock content %}
