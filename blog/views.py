@@ -112,15 +112,14 @@ def password_reset_request(request):
 def comment_view(request, pk):
 	post = get_object_or_404(Post, pk=pk)
 	template_name = 'post_comment.html'
-	comment = None
 	if request.method == 'POST':
 		c_form = CommentForm(request.POST)
 		if c_form.is_valid():
 			comment = c_form.save(commit=False)
 			comment.post = post
-			comment = comment.save()
+			comment.save()
 			return redirect('post_detail', pk=pk)
 	else:
 		c_form = CommentForm()
 
-	return render(request, template_name, {'comment': comment,'c_form': c_form})
+	return render(request, template_name, {'post': post,'c_form': c_form})
